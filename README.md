@@ -66,6 +66,7 @@ pip install dbt-bigquery
 
 # Initialise le projet (répondez aux questions)
 dbt init velib_project
+```
 Si la commande pip n'est pas trouvée, vérifiez que vous avez coché "Add Python to PATH" lors de l'installation de Python.
 
 </details>
@@ -80,50 +81,49 @@ C'est souvent là que ça bloque. Pour vous connecter à BigQuery sans prise de 
 
 Créez un fichier models/staging/stg_stations.sql :
 
-SQL
-
+```sql
 SELECT
     stationCode as station_id,
     num_bikes_available as nb_velos,
     is_renting = 'OUI' as est_ouverte,
     capacity
 FROM `votre-projet-gcp.raw_velib.stations`
+```
 Puis lancez la commande dbt run dans le terminal.
 
 </details>
 
-Étape 3 : La Dataviz
+## Étape 3 : La Dataviz
 La donnée est propre. Montrez-la.
 
-🎯 Mission
+### 🎯 Mission
 Ouvrir Google Looker Studio.
 
 Connecter la source de données "BigQuery" -> Votre table créée par dbt.
 
 Faire un graph : "Top 10 des stations avec le plus de capacité".
 
-🚀 Phase 2 : L'Industrialisation (Software Engineering)
+# 🚀 Phase 2 : L'Industrialisation (Software Engineering)
 Vous avez validé la logique. Maintenant, on arrête de charger les fichiers à la main. On veut du temps réel.
 
-Étape 4 : Python & API
+## Étape 4 : Python & API
 On va remplacer votre clic manuel "Uploader un fichier" par un robot.
 
-🧠 Le Concept : API & JSON
+### 🧠 Le Concept : API & JSON
 Une API est une prise électrique sur le web qui donne de la donnée. Le JSON est le format de cette donnée.
 
-🎯 Mission
+### 🎯 Mission
 Créer un script extract.py qui télécharge la donnée Vélib et l'affiche.
 
-🆘 Cheat Codes
+### 🆘 Cheat Codes
 <details> <summary>👀 <strong>Cheat : Le Script de base</strong></summary>
 
-Python
-
+```python
 import requests
 import json
 
 # L'URL magique
-url = "[https://velib-metropole-opendata.smoove.pro/opendata/Velib_Metropole/station_status.json](https://velib-metropole-opendata.smoove.pro/opendata/Velib_Metropole/station_status.json)"
+url = "https://velib-metropole-opendata.smoove.pro/opendata/Velib_Metropole/station_status.json"
 
 # On appelle le serveur
 reponse = requests.get(url)
@@ -133,27 +133,28 @@ data = reponse.json()
 
 # Affichez pour comprendre la structure
 print(data) 
+```
 </details>
 
-Étape 5 : Docker & Airbyte (Le niveau Pro)
+## Étape 5 : Docker & Airbyte (Le niveau Pro)
 Vous ne lancerez pas le script Python depuis votre ordi tous les jours. On utilise un outil d'ingestion : Airbyte.
 
-🧠 Le Concept : Conteneurs
+### 🧠 Le Concept : Conteneurs
 Docker permet d'installer Airbyte sans polluer votre Mac/PC. C'est une "boîte" étanche.
 
-🎯 Mission
+### 🎯 Mission
 Installer Docker Desktop.
 
 Installer Airbyte en local.
 
 Connecter l'API Vélib (Source) à BigQuery (Destination) dans Airbyte.
 
-🔗 Liens utiles
+### 🔗 Liens utiles
 Installer Docker
 
 Deployer Airbyte Localement (Le tuto officiel)
 
-🆘 Cheat Codes
+### 🆘 Cheat Codes
 <details> <summary>👀 <strong>Cheat : Configurer Airbyte</strong></summary>
 
 Dans Airbyte (localhost:8000), créez une Source "File" (Fichier).
@@ -162,11 +163,11 @@ URL : L'url du JSON Vélib.
 
 Format : JSON.
 
-Destination : BigQuery (Il faudra créer un "Service Account" sur Google Cloud pour donner la permission à Airbyte d'écrire. C'est l'étape la plus dure du projet, googlez "Create Service Account BigQuery").
+Destination : BigQuery (Il faudra créer un "Service Account" sur Google Cloud pour donner la permission à Airbyte d'écrire. C'est l'étape la plus dure du projet, googlez "Create Service Account BigQuery".
 
 </details>
 
-🎉 Le Final Boss
+### 🎉 Le Final Boss
 Si vous avez réussi à :
 
 Avoir Airbyte qui tourne et envoie la donnée tous les jours.

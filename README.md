@@ -229,3 +229,27 @@ Un pipeline de transformation propre (dbt).
 Un dashboard qui se met à jour.
 
 C'est littéralement la Modern Data Stack. Prenez une capture d'écran de votre "Lineage" dbt (le graphe qui montre les tables) et de votre Dashboard. C'est votre premier projet portfolio.
+
+---
+
+## 💀 Bonus Stage : La CI/CD (Intégration Continue)
+
+**Attention : Ici, plus de cheat codes. Vous êtes seuls.**
+
+Vous avez codé sur votre machine. C'est bien. Mais en entreprise, si vous poussez du code pourri qui casse tout, vous faites perdre de l'argent.
+On veut que GitHub vérifie votre code **automatiquement** à chaque fois que vous faites une sauvegarde (`git push`).
+
+### 🧠 C'est quoi le concept ?
+La **CI (Continuous Integration)**, c'est un robot qui lance vos tests à chaque modification du code.
+Si vous modifiez un modèle SQL et que vous cassez la logique, le robot vous envoie un mail : "Build Failed".
+
+### 🎯 Mission
+Utiliser **GitHub Actions** pour créer un workflow.
+1.  Créer un fichier `.github/workflows/dbt_test.yml`.
+2.  Faire en sorte que ce fichier installe dbt et lance `dbt test` à chaque fois que vous pushez sur la branche `main`.
+3.  **Le défi :** Vous allez devoir gérer les "Secrets" GitHub (pour ne pas mettre votre clé JSON Google Cloud en clair dans le code, sinon des hackers vont miner du Bitcoin sur votre compte).
+
+### 💡 Indice
+Cherchez "GitHub Actions dbt BigQuery example" sur Google. Vous allez devoir apprendre à utiliser les `SECRETS` dans les settings du repo GitHub.
+
+---
